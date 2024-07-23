@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cw.mapper.AdjustSalaryMapper">
+    <resultMap id="baseResultMap" type="com.cw.model.AdjustSalary">
+        <id column="id" property="id" jdbcType="INTEGER"></id>
+        <result column="eid" property="eid" jdbcType="INTEGER"></result>
+        <result column="asDate" property="adDate" jdbcType="DATE"></result>
+        <result column="beforeSalary" property="beforeSalary" jdbcType="VARCHAR"></result>
+        <result column="afterSalary" property="afterSalary" jdbcType="VARCHAR"></result>
+        <result column="reason" property="reason" jdbcType="VARCHAR"></result>
+        <result column="remark" property="remark" jdbcType="VARCHAR"></result>
+    </resultMap>
+    <sql id="base_column_list">
+        id
+        ,eid,asDate,beforeSalary,afterSalary,reson,remark
+    </sql>
+
+    <insert id="insert" parameterType="com.cw.model.AdjustSalary">
+        insert into adjustsalary(eid, adDate, beforeSalary, afterSalary, reason, remark)
+        values (#{eid}, #{adDate}, #{beforeSalary}, #{afterSalary}, #{reason}, #{remark})
+    </insert>
+    <insert id="insertSelectActive" parameterType="com.cw.model.AdjustSalary">
+        insert into adjustSalary
+        <trim prefix="(" suffix=")" suffixOverrides=","/>
+        <if test="eid != null">
+            eid,
+        </if>
+        <if test="asDate != null">
+            asDate,
+        </if>
+        <if test="beforeSalary != null">
+            beforeSalary,
+        </if>
+        <if test="afterSalary != null">
+            afterSalary,
+        </if>
+        <if test="reason != null">
+            reason,
+        </if>
+        <if test="remark != null">
+            remark,
+        </if>
+        <trim prefix="values(" suffix=")" suffixOverrides=","/>
+
+        <if test="eid != null">
+            #{eid ,jdbcType=INTEGER}
+        </if>
+        <if test="asDate != null">
+            #{asDate ,jdbcType=INTEGER}
+        </if>
+        <if test="beforeSalary != null">
+            #{beforeSalary ,jdbcType=INTEGER}
+        </if>
+        <if test="afterSalary != null">
+            #{afterSalary,jdbcType=INTEGER}
+        </if>
+        <if test="reason != null">
+            #{reason ,jdbcType=INTEGER}
+        </if>
+        <if test="remark != null">
+            #{remark ,jdbcType=INTEGER}
+        </if>
+    </insert>
+    <update id="updateByPrimaryKey">
+        update adjustSalary
+        set eid=#{eid,jdbcType=INTEGER},
+            asDate=#{asDate,jdbcType=DATE},
+            beforSalary#{beforSalary,jdbcType=VARCHAR},
+            afterSalary#{afterSalary,jdbcType=VARCHAR},
+            reson#{reson,jdbcType=VARCHAR},
+            remark#{remark,jdbcType=VARCHAR}
+    </update>
+    <update id="updateByPrimaryKeySelect">
+
+    </update>
+
+    <delete id="deleteByPrimaryKey">
+        delete
+        from adjustsalary
+        where id = #{id}
+    </delete>
+    <select id="selectByPrimaryKey" resultType="com.cw.model.AdjustSalary">
+        select
+        <include refid="base_column_list"/>
+        from adjustSalary where id =#{id}
+    </select>
+    <select id="selectAllSalary" resultType="com.cw.model.AdjustSalary">
+        select * from adjustSalary
+    </select>
+</mapper>
